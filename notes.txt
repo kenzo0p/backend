@@ -1,2 +1,2 @@
 lecture no 1 vid -6
-______
+______src -- mkdir controllers db middlewares models routes utils
