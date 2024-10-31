@@ -1,8 +1,12 @@
 lecture no 1 vid -6
 ______src -- mkdir controllers db middlewares models routes utils
-
+cookie-parser  , cors 
 lecture no 2 vid -7
 ________Database connection
 always wrap it in try catch or promisess for connecting database jb bhi database se bat karo try catch lagao 
 database is always in another continent so time lgta hain use async await
 -in node we have process.exit(1) to exit read that with some code like 1
+
+
+for middlewares we use app.use
+(err,res,req,next) next use karliya mtl you are talking about middlewares next is just flag 1 kam hua to next middleware pe jayega aur wo next and then when it goes to res it will be discarded
