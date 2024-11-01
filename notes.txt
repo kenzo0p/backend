@@ -10,3 +10,8 @@ database is always in another continent so time lgta hain use async await
 
 for middlewares we use app.use
 (err,res,req,next) next use karliya mtl you are talking about middlewares next is just flag 1 kam hua to next middleware pe jayega aur wo next and then when it goes to res it will be discarded
+{mongodb save data in bson format}
+
+in mongodb when we use index:true in models so that koi bhi field badhe hi optimize tarike se search hogiiii
+
+(bcrypt package = for password  , jwt jason web token)
