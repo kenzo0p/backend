@@ -15,3 +15,5 @@ for middlewares we use app.use
 in mongodb when we use index:true in models so that koi bhi field badhe hi optimize tarike se search hogiiii
 
 (bcrypt package = for password  , jwt jason web token)
+
+multer package is used for uploading files
