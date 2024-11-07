@@ -18,6 +18,7 @@ const uploadOnClodinary = async (localFilePath) => {
         
         //file has been uploaded successfully
         console.log("FILE UPLOADED SUCCESSFULLY" ,response.url);
+        fs.unlinkSync(localFilePath)
         return response;
 
 
