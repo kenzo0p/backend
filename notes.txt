@@ -17,3 +17,12 @@ in mongodb when we use index:true in models so that koi bhi field badhe hi optim
 (bcrypt package = for password  , jwt jason web token)
 
 multer package is used for uploading files
+
+ACCESS TOKEN => aceess tokens are usually short lived 
+
+exmple :- when we login our login are kept in website i.e referesh token
+exmple :- when we login our login are kept only for sometime in website i.e access token
+
+Refresh token => this are long lived 
+
+if in functions when there is no use of res then simply replace it by _
