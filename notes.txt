@@ -42,7 +42,7 @@ Understand the subscription schema =>  {
 
 
 
-mongodb aggregatio pipeline => {
-    
+mongodb aggregatio pipeline and learn aggregation pipeline=> {
+    watch again 
 }
 
