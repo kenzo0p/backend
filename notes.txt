@@ -18,6 +18,9 @@ in mongodb when we use index:true in models so that koi bhi field badhe hi optim
 
 multer package is used for uploading files
 
+
+
+
 ACCESS TOKEN => aceess tokens are usually short lived 
 
 exmple :- when we login our login are kept in website i.e referesh token
