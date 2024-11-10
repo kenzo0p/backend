@@ -29,3 +29,20 @@ exmple :- when we login our login are kept only for sometime in website i.e acce
 Refresh token => this are long lived 
 
 if in functions when there is no use of res then simply replace it by _
+
+
+Understand the subscription schema =>  {
+    agar pata karna hain ki su scrier kitne hain then ham find krenge subscription schema mein lekin fid hamm channe karenge 
+
+    wacth this video again......
+
+
+    abb hamne kitne channel ko sub kr ke rkha hain to uske liye subscriber i  alue dekhke usme se channel ki list leke aao suppose a channels a,b,c ans me subscribing these these threes so i am sub and wo channel
+}
+
+
+
+mongodb aggregatio pipeline => {
+    
+}
+
