@@ -1,9 +1,9 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import { uploadOnClodinary } from "../utils/cloudinary.js";
+import { uploadOnClodinary ,deleteFromCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiReasponse.js";
-import jwt from "jasonwebtoken";
+import jwt from "jsonwebtoken";
 
 const generateAccessAnsRefreshToken = async (userId) => {
   try {
@@ -61,8 +61,8 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User with email and username already exist");
   }
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-  // const coverImageLocalPath = req.files?.coverImage[0]?.path
+  const avatarLocalPath = req.files?.avatar?.[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage?.[0]?.path
   let coverImageLocalPath;
   if (
     req.files &&
@@ -83,24 +83,35 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Avatar file is required");
   }
 
-  const user = await User.create({
-    fullName,
-    avatar: avatar.url,
-    coverImage: coverImage?.url || "",
-    email,
-    password,
-    username: username.toLowerCase(),
-  });
-
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
-  if (!createdUser) {
-    throw new ApiError(500, "Something went wrong while registering the user");
-  }
-  return res
-    .status(201)
-    .json(new ApiResponse(200, createdUser, "User registered Successfully"));
+ try {
+   const user = await User.create({
+     fullName,
+     avatar: avatar.url,
+     coverImage: coverImage?.url || "",
+     email,
+     password,
+     username: username.toLowerCase(),
+   });
+ 
+   const createdUser = await User.findById(user._id).select(
+     "-password -refreshToken"
+   );
+   if (!createdUser) {
+     throw new ApiError(500, "Something went wrong while registering the user");
+   }
+   return res
+     .status(201)
+     .json(new ApiResponse(200, createdUser, "User registered Successfully"));
+ } catch (error) {
+    console.log("user creation failed")
+    if(avatar){
+      await deleteFromCloudinary(avatar.public_id)
+    }
+    if(coverImage){
+      await deleteFromCloudinary(coverImage.public_id)
+    }
+    throw new ApiError(500, "Something went wrong while registering the user and images were deleted");
+ }
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -473,7 +484,6 @@ const getWatchHistory = asyncHandler(async (req, res) => {
 });
 
 export {
-  getUserChannelProfile,
   updateUserAvatar,
   registerUser,
   loginUser,
