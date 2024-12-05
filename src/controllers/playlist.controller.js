@@ -7,7 +7,8 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 
 const createPlaylist = asyncHandler(async (req, res) => {
     const {name, description} = req.body
-
+    const user = req.user._id 
+    const playlist = await Playlist.create({})
     //TODO: create playlist
 })
 
