@@ -266,24 +266,56 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
   const videoExist = await Playlist.videos.find(video => video.toString() === videoId)
   if(!videoExist)  {
     throw new ApiError(400,"No such video exist");
-    
+     
   }
   const modifyPlaylistVideo  = await Playlist.videos.find((video) => video.toString() !== videoId)
   const removeVideo = await Playlist.findByIdAndUpdate(playlistId , {$set :{videos : modifyPlaylistVideo}} , {new :true})
   if(!removeVideo)  {
     throw new ApiError(400 , "Something went wrong during removing video")
   }
+  return res.status(200).json(new ApiResponse(200 , removeVideo , "Video removed successfully"))
 });
 
 const deletePlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
-  // TODO: delete playlist
+  if(!isValidObjectId(playlistId)) {
+    throw new ApiError(400, "Ivalid playlist id")
+  }
+  const playlist  = await Playlist.findById(playlistId)
+  if(!playlist) {
+    throw new ApiError(400 , "Playlist not found")
+  }
+  if(playlist.owner.toString() !== req.user._id) {
+    throw new ApiError(400 , "you are not allowed to delete this playlist")
+  }
+  const deletePlaylist = await Playlist.findByIdAndDelete(playlist.id)
+  if(!deletePlaylist)  {
+    throw new ApiError(400 ,  "playlist is not deleted !")
+  }
+  return res.status(200).json(new ApiResponse(200 , deletePlaylist, "Playlist deleted successfully"))
 });
 
 const updatePlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
   const { name, description } = req.body;
-  //TODO: update playlist
+  if(!name || !description) {
+    throw new ApiError(400 , "All field are required")
+  }
+  if(!isValidObjectId(playlistId)) {
+    throw new ApiError(400 , "Invalid Playlist ID")
+  }
+  const playlist = await Playlist.findById(playlistId)
+  if(!playlistId) {
+    throw new ApiError(400 , "Playlist is not found")
+  }
+  if(playlist.owner.toSting() !== req.user._id) {
+    throw new ApiError(400 , "You don't have permission to update this playlist")
+  } 
+  const updatePlaylist  = await Playlist.findByIdAndUpdate(playlistId,{$set:{name,description} }, {new :true})
+  if(!updatePlaylist) {
+    throw new ApiError(400 , "Something went wrong during updating th playlist")
+  }
+  return res.status(200).json(new ApiResponse(200 , updatePlaylist,"Playlist updated successfully"))
 });
 
 export {
